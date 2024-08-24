@@ -1,0 +1,90 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block content %}
+<h2>todo list</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="input-group mb-3">
+        <input
+            type="text"
+            name="InputThing"
+            class="form-control"
+            id="InputThing"
+            placeholder="想要做甚麼?"
+            aria-describedby="button-addon2"
+        />
+        <div class="input-group-append">
+            <button id="buttonSubmit" class="btn btn-outline-secondary" type="button">送出</button>
+        </div>
+    </div>
+</form>
+
+
+<table id="table1" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>狀態</th>
+			<th>待做事項</th>
+			<th>編輯</th>
+		</tr>
+	</thead>
+	<tbody>
+        {% for things in lists %}
+    <tr>
+      <td>
+        <form
+          method="POST"
+          action="{% url 'todo_list:completed' things.todo_id %}"
+          style="display: inline"
+        >
+          {% csrf_token %}
+          <input
+            type="checkbox"
+            name="completed"
+            value="true"
+            {% if things.completed %} 
+              checked 
+            {% endif %}
+            onchange="this.form.submit()"
+          />
+          {% if things.completed %}
+          <span>已完成</span>
+          {% else %}
+          <span>未完成</span>
+          {% endif %}
+        </form>
+      </td>
+      <td>{{ things.todo }}</td>
+      <td>
+        <a
+          href="{% url 'todo_list:delete' things.todo_id %}"
+          class="btn btn-danger"
+          >刪除</a
+        >
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %} 
+{% block styles %}
+<style>
+	.input-group {
+		display: flex;
+		width: 100%;
+	}
+
+	.form-control {
+		flex: 1;
+	}
+
+	.btn-outline-secondary {
+		white-space: nowrap;
+	}
+</style>
+{% endblock %} 
+{% block scripts %}
+<script>
+
+</script>
+{% endblock %}
