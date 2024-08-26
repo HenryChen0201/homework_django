@@ -1,4 +1,5 @@
 {% extends 'base.html' %} 
+
 {% load static %} 
 {% block content %}
 <h2>todo list</h2>
@@ -14,7 +15,7 @@
             aria-describedby="button-addon2"
         />
         <div class="input-group-append">
-            <button id="buttonSubmit" class="btn btn-outline-secondary" type="button">送出</button>
+            <button id="buttonSubmit" class="btn btn-outline-secondary" type="submit">送出</button>
         </div>
     </div>
 </form>
@@ -29,42 +30,27 @@
 		</tr>
 	</thead>
 	<tbody>
-        {% for things in lists %}
+    {% for things in lists %}
     <tr>
-      <td>
-        <form
-          method="POST"
-          action="{% url 'todo_list:completed' things.todo_id %}"
-          style="display: inline"
-        >
-          {% csrf_token %}
-          <input
-            type="checkbox"
-            name="completed"
-            value="true"
-            {% if things.completed %} 
-              checked 
+        <td>
+          <form method="POST" action="{% url 'todo_list:complete' things.todo_id %}" style="display: inline">
+            {% csrf_token %}
+            <input type="checkbox" name="completed" value="true" 
+            {% if things.complete == 1 %} checked {% endif %} onchange="this.form.submit()" />
+            {% if things.complete == 1 %}
+            <span>已完成</span>
+            {% else %}
+            <span>未完成</span>
             {% endif %}
-            onchange="this.form.submit()"
-          />
-          {% if things.completed %}
-          <span>已完成</span>
-          {% else %}
-          <span>未完成</span>
-          {% endif %}
-        </form>
-      </td>
-      <td>{{ things.todo }}</td>
-      <td>
-        <a
-          href="{% url 'todo_list:delete' things.todo_id %}"
-          class="btn btn-danger"
-          >刪除</a
-        >
-      </td>
+            </form>
+        </td>
+        <td>{{ things.todo }}</td>
+        <td>
+            <a href="{% url 'todo_list:delete' things.todo_id %}" class="btn btn-danger">刪除</a>
+        </td>
     </tr>
     {% endfor %}
-    </tbody>
+</tbody>
 </table>
 {% endblock %} 
 {% block styles %}
@@ -85,6 +71,6 @@
 {% endblock %} 
 {% block scripts %}
 <script>
-
+  
 </script>
 {% endblock %}

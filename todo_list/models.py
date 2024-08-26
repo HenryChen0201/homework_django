@@ -11,7 +11,7 @@ from django.utils import timezone
 
 class todo(models.Model):
     todo_id = models.AutoField(primary_key=True)
-    complete = models.IntegerField()
+    complete = models.IntegerField(default=0)
     todo = models.CharField(max_length=20)
     last_update = models.DateField(default=timezone.now)
 

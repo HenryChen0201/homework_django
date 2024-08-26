@@ -13,10 +13,10 @@
     <div class="container">
       <div class="row mt-3">
         {% include 'navbar.html' %}
-        <div class="col-2" style="background-color: LightSkyBlue"></div>
+        <div class="col-2" style="background-color: gray "></div>
         <div class="col-8">
           <div class="card">
-            <h5 class="card-header">{{ title|default:"Django App" }}</h5>
+            <h5 class="card-header">{{ title }}</h5>
             <div class="card-body">
               {% block content %}
               <p>這裡的內容會被換掉</p>
@@ -24,7 +24,7 @@
             </div>
           </div>
         </div>
-        <div class="col-2" style="background-color: lightgray"></div>
+        <div class="col-2" style="background-color: LightBlue"></div>
       </div>
       {% include 'footer.html' %}
     </div>
