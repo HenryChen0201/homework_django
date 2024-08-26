@@ -6,14 +6,14 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-from django.utils import timezone
+from datetime import datetime
 
 
 class todo(models.Model):
     todo_id = models.AutoField(primary_key=True)
     complete = models.IntegerField(default=0)
     todo = models.CharField(max_length=20)
-    last_update = models.DateField(default=timezone.now)
+    last_update = models.DateTimeField(default=datetime.now())
 
     class Meta:
         db_table = 'todo'
